@@ -11,7 +11,7 @@ final class SwiftDemanglerTests: XCTestCase {
 
     func testIsEven() {
         testDemangle(
-            "S13ExampleNumber6isEven6numberSbSi_tF",
+            "$S13ExampleNumber6isEven6numberSbSi_tF",
             expect: "ExampleNumber.isEven(number: Swift.Int) -> Swift.Bool"
         )
     }
