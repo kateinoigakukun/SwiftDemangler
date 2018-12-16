@@ -106,6 +106,9 @@ class Parser {
             }
             skip(by: 1)
             return .shortenType(shortenType)
+        case "y":
+            skip(by: 1)
+            return .list([])
         default:
             fatalError()
         }

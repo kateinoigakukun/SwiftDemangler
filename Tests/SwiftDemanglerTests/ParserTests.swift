@@ -67,4 +67,9 @@ class ParserTests: XCTestCase {
         let parser = Parser(text: "SbSi_tK")
         XCTAssertEqual(parser.parseFunctionSign(), .init(returnType: .shortenType(.bool), argumentTuple: [.shortenType(.int)], throwsAnnotation: true))
     }
+
+    func testParseVoidReturnFunction() {
+        let parser = Parser(text: "ySi_t")
+        XCTAssertEqual(parser.parseFunctionSign(), .init(returnType: .list([]), argumentTuple: [.shortenType(.int)], throwsAnnotation: false))
+    }
 }
