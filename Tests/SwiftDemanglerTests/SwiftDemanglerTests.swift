@@ -14,5 +14,10 @@ final class SwiftDemanglerTests: XCTestCase {
             "$S13ExampleNumber6isEven6numberSbSi_tF",
             expect: "ExampleNumber.isEven(number: Swift.Int) -> Swift.Bool"
         )
+
+        testDemangle(
+            "$S13ExampleNumber6isEven6number4hoge4fugaSbSi_SSSftF",
+            expect: "ExampleNumber.isEven(number: Swift.Int, hoge: Swift.String, fuga: Swift.Float) -> Swift.Bool"
+        )
     }
 }

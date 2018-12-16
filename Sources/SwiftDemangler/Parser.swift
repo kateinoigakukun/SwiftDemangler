@@ -24,12 +24,7 @@ class Parser {
     func parse() throws -> Node.Global {
         try parsePrefix()
         return Node.Global(
-            node: .function(
-                Node.Module(text: parseIdentifier().text),
-                parseIdentifier(),
-                [parseIdentifier()],
-                parseFunction()
-            )
+            node: parseFunction()
         )
     }
 
@@ -104,7 +99,19 @@ class Parser {
         }
     }
 
-    func parseFunction() -> Node.Function {
+    func parseFunction() -> Node {
+        let module = Node.Module(text: parseIdentifier().text)
+        let functionName = parseIdentifier()
+        var arguments = [Node.Identifier]()
+        while current != "S" {
+            arguments.append(parseIdentifier())
+        }
+
+        let sign = parseFunctionSign()
+        return Node.function(module, functionName, arguments, sign)
+    }
+
+    func parseFunctionSign() -> Node.Function {
         return Node.Function(returnType: parseType(), argumentTuple: parseType().list!)
     }
 

@@ -8,18 +8,21 @@
 import Foundation
 
 indirect enum Type: Equatable, SwiftExpressible {
-    case tuple
     case list([Type])
     case shortenType(ShortenType)
 
     enum ShortenType: String, Equatable, SwiftExpressible {
         case int = "Si"
         case bool = "Sb"
+        case float = "Sf"
+        case string = "SS"
 
         var swiftExpression: String {
             switch self {
             case .int: return "Swift.Int"
             case .bool: return "Swift.Bool"
+            case .float: return "Swift.Float"
+            case .string: return "Swift.String"
             }
         }
     }
@@ -41,8 +44,6 @@ indirect enum Type: Equatable, SwiftExpressible {
             fatalError()
         case .shortenType(let shortenType):
             return shortenType.swiftExpression
-        case .tuple:
-            fatalError()
         }
     }
 }
