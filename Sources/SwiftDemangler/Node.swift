@@ -35,6 +35,7 @@ indirect enum Node: Equatable {
     struct Function: Equatable {
         let returnType: Type
         let argumentTuple: [Type]
+        let throwsAnnotation: Bool
     }
 
     var module: Module? {

@@ -28,7 +28,7 @@ class ParserTests: XCTestCase {
                 [.init(text: "number")],
                 Node.Function(
                     returnType: .shortenType(.bool),
-                    argumentTuple: ([.shortenType(.int)])
+                    argumentTuple: ([.shortenType(.int)]), throwsAnnotation: false
                 )
             )
         )
@@ -60,6 +60,11 @@ class ParserTests: XCTestCase {
 
     func testParseFuncion() {
         let parser = Parser(text: "SbSi_t")
-        XCTAssertEqual(parser.parseFunctionSign(), Node.Function(returnType: .shortenType(.bool), argumentTuple: [.shortenType(.int)]))
+        XCTAssertEqual(parser.parseFunctionSign(), Node.Function(returnType: .shortenType(.bool), argumentTuple: [.shortenType(.int)], throwsAnnotation: false))
+    }
+
+    func testParseThrowableFunction() {
+        let parser = Parser(text: "SbSi_tK")
+        XCTAssertEqual(parser.parseFunctionSign(), .init(returnType: .shortenType(.bool), argumentTuple: [.shortenType(.int)], throwsAnnotation: true))
     }
 }

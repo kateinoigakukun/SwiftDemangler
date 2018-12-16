@@ -16,6 +16,13 @@ class Parser {
         return text[currentPosition]
     }
 
+    var currentOrNil: Character? {
+        guard text.indices.contains(currentPosition) else {
+            return nil
+        }
+        return text[currentPosition]
+    }
+
     init(text: String) {
         self.text = text
         self.currentPosition = text.startIndex
@@ -23,9 +30,10 @@ class Parser {
 
     func parse() throws -> Node.Global {
         try parsePrefix()
-        return Node.Global(
-            node: parseFunction()
-        )
+        if isFunction() {
+            return Node.Global(node: parseFunction())
+        }
+        fatalError()
     }
 
     func next() -> Character {
@@ -38,6 +46,10 @@ class Parser {
             return nil
         }
         return text[text.index(after: currentPosition)]
+    }
+
+    func isFunction() -> Bool {
+        return text.last == "F"
     }
 
     func parsePrefix() throws {
@@ -112,7 +124,13 @@ class Parser {
     }
 
     func parseFunctionSign() -> Node.Function {
-        return Node.Function(returnType: parseType(), argumentTuple: parseType().list!)
+        let returnType = parseType()
+        let argumentTuple = parseType().list!
+        let throwsAnnotation = currentOrNil == "K"
+        return Node.Function(
+            returnType: returnType, argumentTuple: argumentTuple,
+            throwsAnnotation: throwsAnnotation
+        )
     }
 
     enum Error: Swift.Error {
