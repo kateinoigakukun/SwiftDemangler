@@ -14,11 +14,14 @@ indirect enum Node: Equatable {
     case argumentTuple([Type])
     case function(Module, Identifier, [Identifier], Function)
 
-    struct Global: Equatable {
+    struct Global: Equatable, SwiftExpressible {
         let node: Node
 
         var module: Module? {
             return node.module
+        }
+        var swiftExpression: String {
+            return node.swiftExpression
         }
     }
 
@@ -31,7 +34,7 @@ indirect enum Node: Equatable {
 
     struct Function: Equatable {
         let returnType: Type
-        let argumentTuple: Type
+        let argumentTuple: [Type]
     }
 
     var module: Module? {
@@ -44,6 +47,21 @@ indirect enum Node: Equatable {
             return module
         case .identifier, .labelList, .type, .argumentTuple:
             return nil
+        }
+    }
+
+    var swiftExpression: String {
+        switch self {
+        case .global(let global):
+            return global.node.swiftExpression
+        case .function(let module, let identifier, let labels, let sign):
+            let label = zip(labels, sign.argumentTuple).map { "\($0.text): \($1.swiftExpression)" }
+            .joined(separator: ", ")
+            return "\(module.text).\(identifier.text)(\(label)) -> \(sign.returnType.swiftExpression)"
+        case .module(let module):
+            return module.text
+        case .identifier(let id): return id.text
+        default: fatalError()
         }
     }
 }

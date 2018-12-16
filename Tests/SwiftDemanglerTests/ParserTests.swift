@@ -19,13 +19,14 @@ class ParserTests: XCTestCase {
             XCTFail(String.init(describing: error), file: file, line: line)
         }
     }
-
+    
     func testIsEven() {
         testParse(
             "$S13ExampleNumber6isEven6numberSbSi_tF",
             expect: .function(
                 .init(text: "ExampleNumber"), .init(text: "isEven"),
-                [.init(text: "number")], Node.Function(returnType: .shortenType(.bool), argumentTuple: .list([.shortenType(.int)]))
+                [.init(text: "number")], Node.Function(returnType: .shortenType(.bool), argumentTuple: ([.shortenType(.int)])
+                )
             )
         )
     }
@@ -56,6 +57,6 @@ class ParserTests: XCTestCase {
 
     func testParseFuncion() {
         let parser = Parser(text: "SbSi_t")
-        XCTAssertEqual(parser.parseFunction(), Node.Function(returnType: .shortenType(.bool), argumentTuple: .list([.shortenType(.int)])))
+        XCTAssertEqual(parser.parseFunction(), Node.Function(returnType: .shortenType(.bool), argumentTuple: [.shortenType(.int)]))
     }
 }

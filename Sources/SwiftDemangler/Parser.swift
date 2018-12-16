@@ -28,7 +28,7 @@ class Parser {
                 Node.Module(text: parseIdentifier().text),
                 parseIdentifier(),
                 [parseIdentifier()],
-                Node.Function(returnType: parseType(), argumentTuple: parseType())
+                parseFunction()
             )
         )
     }
@@ -105,7 +105,7 @@ class Parser {
     }
 
     func parseFunction() -> Node.Function {
-        return Node.Function(returnType: parseType(), argumentTuple: parseType())
+        return Node.Function(returnType: parseType(), argumentTuple: parseType().list!)
     }
 
     enum Error: Swift.Error {
