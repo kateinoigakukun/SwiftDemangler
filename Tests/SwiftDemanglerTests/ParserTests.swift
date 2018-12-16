@@ -72,4 +72,8 @@ class ParserTests: XCTestCase {
         let parser = Parser(text: "ySi_t")
         XCTAssertEqual(parser.parseFunctionSign(), .init(returnType: .list([]), argumentTuple: [.shortenType(.int)], throwsAnnotation: false))
     }
+
+    func testParseMethod() {
+        let parser = Parser(text: "$S13ExampleAnimal3DogV4barkSSyF")
+    }
 }

@@ -9,6 +9,7 @@ import Foundation
 
 indirect enum Type: Equatable, SwiftExpressible {
     case list([Type])
+    case `struct`(Struct)
     case shortenType(ShortenType)
 
     enum ShortenType: String, Equatable, SwiftExpressible {
@@ -25,6 +26,10 @@ indirect enum Type: Equatable, SwiftExpressible {
             case .string: return "Swift.String"
             }
         }
+    }
+
+    struct Struct: Equatable {
+        let text: String
     }
 
     struct Tuple: Equatable {
@@ -44,6 +49,8 @@ indirect enum Type: Equatable, SwiftExpressible {
             fatalError()
         case .shortenType(let shortenType):
             return shortenType.swiftExpression
+        case .struct(let `struct`):
+            return `struct`.text
         }
     }
 }

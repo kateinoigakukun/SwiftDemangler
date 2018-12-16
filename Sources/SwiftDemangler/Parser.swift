@@ -55,8 +55,7 @@ class Parser {
     func parsePrefix() throws {
         switch current {
         case "$" where peek() == "S":
-            _ = next()
-            _ = next()
+            skip(by: 2)
             return
         default:
              throw Error.unsupportedPrefix

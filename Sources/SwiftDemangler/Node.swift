@@ -58,7 +58,7 @@ indirect enum Node: Equatable {
         case .function(let module, let identifier, let labels, let sign):
             let label = zip(labels, sign.argumentTuple).map { "\($0.text): \($1.swiftExpression)" }
                 .joined(separator: ", ")
-            return "\(module.text).\(identifier.text)(\(label)) -> \(sign.returnType.swiftExpression)"
+            return "\(module.text).\(identifier.text)(\(label))\(sign.throwsAnnotation ? " throws" : "") -> \(sign.returnType.swiftExpression)"
         case .module(let module):
             return module.text
         case .identifier(let id): return id.text
